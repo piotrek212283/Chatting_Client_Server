@@ -16,8 +16,13 @@ set(COMPILE_OPTIONS
 add_subdirectory(libs)
 add_subdirectory(src)
 
+add_executable(Chatting_Client_Server main.cpp)
 
 
+target_link_libraries(${PROJECT_NAME} PUBLIC 
+  asio
+  sources
+)
 
 
 

@@ -4,7 +4,6 @@ add_library(sources STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/client.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/server.cpp
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
 target_include_directories(sources PUBLIC 
