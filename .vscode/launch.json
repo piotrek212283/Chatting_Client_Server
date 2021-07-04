@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/Chatting_Client_Server",
             "args": [],
-            "stopAtEntry": false,
+            "stopAtEntry": true,
             "preLaunchTask": "Build",
             "cwd": "${workspaceFolder}/build",
             "environment": [],

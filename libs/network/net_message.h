@@ -12,13 +12,18 @@ struct message_header
 template <typename T>
 struct message
 {
-    T message_header;
-    std::vector<uint32_t> payload;
+    message_header<T> header;
+    std::vector<uint8_t> payload;
+
+    uint32_t size()
+    {
+        return sizeof(message_header<T>) + payload.size();
+    }
 
     friend std::ostream &operator<<(std::ostream &out, const message<T> &msg)
     {
         /* Print debug info about msg */
-        out << "Type ID: " << reinterpret_cast<int>(msg.message_header.type_id) << " Size: " << msg.message_header.size << std::endl;
+        out << "Type ID: " << static_cast<int>(msg.header.type_id) << " Size: " << msg.header.size << std::endl;
         return out;
     }
 
@@ -34,13 +39,13 @@ struct message
         /* copy msg to payload vector */
         memcpy(msg.payload.data() + i, &data, sizeof(GenericDataType));
         /* update actual msg size */
-        msg.message_header.size = i + sizeof(GenericDataType);
+        msg.header.size = msg.size();
 
         return msg;
     }
 
     template <typename GenericDataType>
-    friend message<T> &operator>>(message<T> &msg, const GenericDataType &data)
+    friend message<T> &operator>>(message<T> &msg, GenericDataType &data)
     {
         /* Check if data is standard type */
         static_assert(std::is_standard_layout<GenericDataType>::value, "Not satandard data type");
@@ -51,7 +56,7 @@ struct message
         /* Resize vector to load new data */
         msg.payload.resize(i);
         /* Update message size */
-        msg.message_header.size = i;
+        msg.header.size = msg.size();
 
         return msg;
     }

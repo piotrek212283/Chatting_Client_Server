@@ -3,6 +3,7 @@ project(Chatting_Client_Server VERSION 1.0.0)
 
 enable_language(C)
 enable_language(CXX)
+set(CMAKE_BUILD_TYPE Debug)
 
 set(COMPILE_OPTIONS
   $<$<COMPILE_LANGUAGE:CXX>:

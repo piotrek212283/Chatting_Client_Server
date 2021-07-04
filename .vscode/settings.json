@@ -63,6 +63,7 @@
         "cinttypes": "cpp",
         "set": "cpp",
         "iomanip": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "netfwd": "cpp"
     }
 }

@@ -1,76 +1,36 @@
+#include "net.h"
 #include <iostream>
 
-#define ASIO_STANDALONE
-#include <asio.hpp>
-#include <asio/ts/buffer.hpp>
-#include <asio/ts/internet.hpp>
-#include "tsqueue.h"
-
-using namespace std;
-using namespace asio;
-using namespace asio::ip;
-
-std::vector<char> vBuffer(20 * 1024);
-void GrabSomeData(tcp::socket &socket)
+enum class TypeID : uint32_t
 {
-    socket.async_read_some(buffer(vBuffer.data(), vBuffer.size()), 
-    [&](std::error_code ec, size_t length) {
-        if (!ec) {
-            cout << "Read: " << length <<" bytes" << endl;
-            for (size_t i = 0; i < length; ++i) {
-                cout << vBuffer[i];
-            }
-            GrabSomeData(socket);
-        }
-    });
-}
+    Mag_data,
+    GPS_data,
+    Test_data
+};
 
 int main()
 {
-    error_code ec;
 
-    /* Create platform specific interface contex*/
-    io_context context;
+    message<TypeID> msg;
 
-    /* Give fake job for context to doesnt finish */
-    io_context::work idleWork(context);
+    float x = 0;
+    float y = 1;
+    int z = 0;
+    msg.header.type_id = TypeID::GPS_data;
+    std::cout << msg << std::endl;
 
-    /* Start Asio context within separate thread */
-    std::thread thrContex = std::thread([&]() { context.run();});
+    std::cout << "x: " <<  x << " y: " << y << " z: " <<  z << std::endl;
 
-    /* Address of somewhere we want to connect */
-    tcp::endpoint endpoint(make_address("93.184.216.34", ec), 80);
+    msg << x << y << z;
 
-    /* Create network socket */
-    tcp::socket socket(context);
+    x = 11;
+    y = 12;
+    z = 1;
 
-    /* Connect socket to desired ip address */
-    socket.connect(endpoint, ec);
+    msg >> z >> y >> x;
+    std::cout << "x: " <<  x << " y: " << y << " z: " <<  z << std::endl;
 
-    /* Check if connection succeeded */
-    if (!ec)
-    {
-        cout << "Connected!" << endl;
-    }
-    else
-    {
-        cout << "Failed to connect: " << ec.message() << endl;
-    }
-
-    if (socket.is_open()) {
-
-        GrabSomeData(socket);
-
-        std::string sRequest = 
-        "GET /index.html HTTP/1.1\r\n"
-        "HOST: example.com \r\n"
-        "Connection: close \r\n\r\n";
-        socket.write_some(buffer(sRequest.data(), sRequest.size()), ec);
-    }
-
-        using namespace std::chrono_literals;
-        std::this_thread::sleep_for(2000ms);
-
-    system("pause");
+    x = 1;
     return 0;
 }
+
