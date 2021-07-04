@@ -61,3 +61,22 @@ struct message
         return msg;
     }
 };
+
+template<typename T>
+class connection_id;
+
+
+template <typename T>
+struct tagged_message
+{
+    /* client identifier by connection id to the server */
+    std::shared_ptr<connection_id<T>> client_identifier = nullptr;
+    /* standard message class */
+    message<T> msg;
+
+    friend std::ostream &operator<<(std::ostream &os, const client_tagged_message<T> &msg)
+    {
+        os << msg.msg;
+        return os;
+    }
+};
