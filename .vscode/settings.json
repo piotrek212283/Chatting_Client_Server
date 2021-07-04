@@ -62,6 +62,7 @@
         "strstream": "cpp",
         "cinttypes": "cpp",
         "set": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "map": "cpp"
     }
 }

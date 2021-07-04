@@ -22,6 +22,8 @@ add_executable(Chatting_Client_Server main.cpp)
 target_link_libraries(${PROJECT_NAME} PUBLIC 
   asio
   sources
+  network
+  utils
 )
 
 

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5.0)
 
 add_library(sources STATIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/client.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/server.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/temp.cpp
+  #${CMAKE_CURRENT_SOURCE_DIR}/server.cpp
 
 )
 
@@ -16,5 +16,6 @@ target_compile_options(sources PUBLIC
 
 target_link_libraries(sources PRIVATE 
   asio
+  utils
 )
 

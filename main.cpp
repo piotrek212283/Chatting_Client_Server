@@ -4,6 +4,7 @@
 #include <asio.hpp>
 #include <asio/ts/buffer.hpp>
 #include <asio/ts/internet.hpp>
+#include "tsqueue.h"
 
 using namespace std;
 using namespace asio;
