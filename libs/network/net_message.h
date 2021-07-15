@@ -65,14 +65,14 @@ struct message
 };
 
 template<typename T>
-class connection_id;
+class Connection_I;
 
 
 template <typename T>
 struct tagged_message
 {
     /* client identifier by connection id to the server */
-    std::shared_ptr<connection_id<T>> client_identifier = nullptr;
+    std::shared_ptr<Connection_I<T>> client_identifier = nullptr;
     /* standard message class */
     message<T> msg;
 

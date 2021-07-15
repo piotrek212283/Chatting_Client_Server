@@ -58,8 +58,7 @@ public:
                 {
                     
                     std::cout << "[Server] New Connection from: " << socket.remote_endpoint() << "\n";
-                    /*
-                    std::shared_ptr<connection_id<T>> newConnection = std::make_shared(connection<T>::owner::server, asioContext, std::move(socket), inputMessageQueue);
+                    std::shared_ptr<Connection_I<T>> newConnection = std::make_shared<Connection_I<T>>(Connection_I<T>::ownership::server, asioContext, std::move(socket), inputMessageQueue);
                     if (OnClientConnect(newConnection))
                     {
                         dequeConnections.push_back(std::move(newConnection));
@@ -70,7 +69,7 @@ public:
                     {
                         std::cout << "[------] Connection Denied \n";
                     }
-                    */
+                    
                 }
                 else
                 {
@@ -82,7 +81,7 @@ public:
     }
 
     /* Send message to specific client clients */
-    void MessageClient(std::shared_ptr<connection_id<T>> client, const message<T> &msg)
+    void MessageClient(std::shared_ptr<Connection_I<T>> client, const message<T> &msg)
     {
         if (client && client->IsConnected())
         {
@@ -97,7 +96,7 @@ public:
     }
 
     /* Send message to all clients */
-    void MessageAllClients(const message<T> &msg, std::shared_ptr<connection_id<T>> ignored_client)
+    void MessageAllClients(const message<T> &msg, std::shared_ptr<Connection_I<T>> ignored_client)
     {
         bool invalidClient = false;
         for (auto &client : dequeConnections)
@@ -141,15 +140,16 @@ public:
 
 protected:
     /* Method called when client connect to the server */
-    virtual void OnClientConnect(std::shared_ptr<connection_id<T>> client)
+    virtual bool OnClientConnect(std::shared_ptr<Connection_I<T>> client)
     {
+        return true;
     }
     /* Method called when client connect to the server */
-    virtual void OnClientDisconnect(std::shared_ptr<connection_id<T>> client)
+    virtual void OnClientDisconnect(std::shared_ptr<Connection_I<T>> client)
     {
     }
     /* Method called when server receive message form client */
-    virtual void OnMessage(std::shared_ptr<connection_id<T>> client, message<T> &msg)
+    virtual void OnMessage(std::shared_ptr<Connection_I<T>> client, message<T> &msg)
     {
     }
 
@@ -165,5 +165,5 @@ protected:
     /* client start ID number to standardize clients */
     uint32_t clientStartID = 10000;
     /* Deque of all clinets connections */
-    std::deque<std::shared_ptr<connection_id<T>>> dequeConnections;
+    std::deque<std::shared_ptr<Connection_I<T>>> dequeConnections;
 };

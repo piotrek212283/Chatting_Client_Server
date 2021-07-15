@@ -17,15 +17,15 @@ public:
     ~SimpleTestServer() = default;
 
 public:
-    virtual void OnClientConnect(std::shared_ptr<connection_id<CustomMessageType>> client) override
+    virtual bool OnClientConnect(std::shared_ptr<Connection_I<CustomMessageType>> client) override
+    {
+        return true;
+    }
+    virtual void OnClientDisconnect(std::shared_ptr<Connection_I<CustomMessageType>> client) override
     {
         return;
     }
-    virtual void OnClientDisconnect(std::shared_ptr<connection_id<CustomMessageType>> client) override
-    {
-        return;
-    }
-    virtual void OnMessage(std::shared_ptr<connection_id<CustomMessageType>> client, message<CustomMessageType> &msg) override
+    virtual void OnMessage(std::shared_ptr<Connection_I<CustomMessageType>> client, message<CustomMessageType> &msg) override
     {
         return;
     }

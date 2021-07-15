@@ -22,7 +22,7 @@ public:
     /* Connect to the server via hostname and port */
     bool Connect(const std::string &hostname, const uint16_t port)
     {
-        connection = std::make_unique<connection_id<T>>();
+        connection = std::make_unique<Connection_I<T>>();
         asio::error_code ec;
         endpoint = asio::ip::tcp::resolver(hostname, to_string(port));
 
@@ -70,8 +70,8 @@ protected:
     asio::ip::tcp::socket socket;
     /* Endpoint with destination to the server */
     asio::ip::tcp::endpoint endpoint;
-    /* Unique pointer to connection_id class which define a connection */
-    std::unique_ptr<connection_id<T>> connection;
+    /* Unique pointer to connection class which define a connection */
+    std::unique_ptr<Connection_I<T>> connection;
     /* Client own thread safe queue of input msg */
     TSqueue<tagged_message<T>> inputMsgQueue;
 };
