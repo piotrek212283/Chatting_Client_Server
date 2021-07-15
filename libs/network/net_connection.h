@@ -33,7 +33,7 @@ private:
     /* Define parent ot the connection */
     ownership connection_owner;
     /* Reference to asio context */
-    asio::io_context &asioCOntext;
+    asio::io_context &asioContext;
     /* Asio socket */
     asio::ip::tcp::socket socket;
     /* Output Message queue */

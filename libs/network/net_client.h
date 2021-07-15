@@ -24,7 +24,7 @@ public:
     {
         connection = std::make_unique<connection_id<T>>();
         asio::error_code ec;
-        endpoint = asio::ip::tcp::resolver resolver(host, to_string(port));
+        endpoint = asio::ip::tcp::resolver(hostname, to_string(port));
 
         connection->ConnectToServer(endpoint);
 
@@ -46,6 +46,7 @@ public:
             thrContext.join();
         }
         connection.release();
+        return true;
     }
 
     /* Check if client is still connected to the server via connection */

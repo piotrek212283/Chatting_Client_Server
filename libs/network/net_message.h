@@ -1,3 +1,5 @@
+#pragma once
+
 #include "net_common.h"
 
 template <typename T>
@@ -74,7 +76,7 @@ struct tagged_message
     /* standard message class */
     message<T> msg;
 
-    friend std::ostream &operator<<(std::ostream &os, const client_tagged_message<T> &msg)
+    friend std::ostream &operator<<(std::ostream &os, const tagged_message<T> &msg)
     {
         os << msg.msg;
         return os;

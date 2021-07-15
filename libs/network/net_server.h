@@ -56,7 +56,9 @@ public:
             {
                 if (!ec)
                 {
+                    
                     std::cout << "[Server] New Connection from: " << socket.remote_endpoint() << "\n";
+                    /*
                     std::shared_ptr<connection_id<T>> newConnection = std::make_shared(connection<T>::owner::server, asioContext, std::move(socket), inputMessageQueue);
                     if (OnClientConnect(newConnection))
                     {
@@ -68,6 +70,7 @@ public:
                     {
                         std::cout << "[------] Connection Denied \n";
                     }
+                    */
                 }
                 else
                 {
@@ -75,7 +78,7 @@ public:
                 }
                 /* Prime context with work to do */
                 WaitForClientConnection();
-            })
+            });
     }
 
     /* Send message to specific client clients */
